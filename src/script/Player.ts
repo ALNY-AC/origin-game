@@ -1,20 +1,26 @@
-import GameObject from "../core/GameObject"
 import Component from "../core/Component";
 import Event from "../core/Event";
+import RigidBody from "../core/components/RigidBody";
+import Square from "../core/shape/Square";
 
 export default class Player extends Component {
-    speed = 1;
+
+    speed = 2;
+    weapon: Square;
     start() {
+
+
+
 
     }
     update() {
+
 
         if (Event.keydown) {
 
             if (Event.input(87)) {
                 this.gameObject.position.y -= this.speed;
             }
-
 
             if (Event.input('E') || Event.input('e')) {
                 this.gameObject.transform.rotate += 1;
@@ -39,5 +45,14 @@ export default class Player extends Component {
 
         }
 
+    }
+    destroy(): void {
+    }
+
+    onCollisionEnter(other: RigidBody, self: RigidBody): void {
+    }
+    onCollisionStay(other: RigidBody, self: RigidBody): void {
+    }
+    onCollisionExit(other: RigidBody, self: RigidBody): void {
     }
 }

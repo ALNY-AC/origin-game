@@ -3,7 +3,7 @@ import Scene from "./Scene";
 import Position from "./Position";
 import Transform from "./Transform";
 
-export default class GameObject {
+export default abstract class GameObject {
 
     name: string;
     components: Component[] = [];
@@ -14,22 +14,13 @@ export default class GameObject {
     color: string = 'rgb(255,255,255)';
     gameObjects: GameObject[] = [];
 
-    constructor() {
+    constructor(name: string = '') {
+        this.name = name;
     }
-    addComponent(comp: Component) {
-        this.components.push(comp);
-        comp.gameObject = this;
-        comp.start();
-    }
-    addGameObject(go: GameObject) {
-        this.gameObjects.push(go);
-        go.parent = this;
-        go.start();
-    }
-    start() {
-    }
-    update() {
 
+    abstract start(): void;
+
+    update() {
         this.components.forEach((el: Component) => {
             el.update();
         });
@@ -45,4 +36,25 @@ export default class GameObject {
         });
     }
 
+
+
+    addComponent(comp: Component) {
+        this.components.push(comp);
+        comp.gameObject = this;
+        comp.start();
+    }
+    addGameObject(go: GameObject) {
+        this.gameObjects.push(go);
+        go.parent = this;
+        go.start();
+    }
+
+    destroy() {
+        this.gameObjects.forEach((el: GameObject) => {
+            el.destroy();
+        });
+        this.components.forEach((el: Component) => {
+            el.destroy();
+        });
+    }
 }

@@ -1,25 +1,13 @@
 import Origin from './core/Origin';
-import Square from './script/Square';
 import './style.css';
 import Scene from './core/Scene';
-import Player from './script/Player';
+import Run from './script/Run';
 
 let app = new Origin();
+
 let scene = new Scene();
-
-let square = new Square();
-let square2 = new Square();
-
-let player = new Player();
-square.addComponent(player);
-
-
-scene.addGameObject(square);
-scene.addGameObject(square2);
-square2.color = 'rgba(255,0,0)'
-
-
-
+scene.scene = scene;
+scene.addComponent(new Run());
 
 app.scene = scene;
 app.run();
