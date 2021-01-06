@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            padding: 0;
+            margin: 0;
+        }
+
+        .view {
+            display: flex;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="view">
+        <canvas onclick="toD(event)" onmousemove="mose(event)" id="canvas" width="900" height="900"></canvas>
+        <div id="ctx">
+            ctx
+            <button onclick="res()">重置</button>
+            <button onclick="go()">前进</button>
+        </div>
+    </div>
+
+    <script>
+        let c = document.getElementById('canvas');
+        let ctx = c.getContext("2d");
+
+        let w = 40;
+        let m = {
+            // x: w,
+            // y: w * 10,
+            x: w * 3,
+            y: w * 2,
+        }
+        let inn = null
+        function toD(e) {
+            console.warn(
+                e.x,
+                e.y
+            );
+            m.x = e.x
+            m.y = e.y
+            res();
+            clearInterval(inn);
+            inn = setInterval(() => {
+                go();
+            }, 24);
+        }
+        function mose(e) {
+            console.clear();
+            console.warn(
+                e.x,
+                e.y
+            );
+        }
+        function render() {
+
+            ctx.fillStyle = "rgb(38,38,38)";
+            ctx.fillRect(0, 0, 900, 900);
+            ctx.beginPath();
+
+
+            for (let i = 0; i < 20; i++) {
+
+                for (let j = 0; j < 20; j++) {
+
+                    ctx.fillStyle = "rgba(255,255,255,0.8)";
+                    ctx.strokeStyle = "rgba(255,255,255,0.8)";
+                    ctx.strokeRect(j * w, i * w, w, w);
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(`${i}-${j}`, j * w + w / 2, i * w + w / 2);
+                }
+            }
+
+
+            ctx.fillStyle = "#fff";
+            ctx.strokeStyle = "#fff";
+            ctx.moveTo(0, 0);
+            ctx.lineTo(m.x, m.y);
+            ctx.stroke();
+
+
+        }
+
+        render();
+
+        let count = 0;
+        function go() {
+            render();
+            seed = 10.1;
+            count++;
+
+            ctx.strokeStyle = "#f66";
+            ctx.fillStyle = "#f66";
+            ctx.beginPath();
+            let next = seed * count;
+
+            let x = 0;
+            let y = 0;
+
+
+            if (m.x > m.y) {
+                x = next;
+                y = m.y / (m.x / next);
+            } else {
+                x = m.x / (m.y / next);
+                y = next;
+            }
+            ctx.arc(x, y, 5, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.beginPath();
+
+
+            if (x > m.x && y > m.y) {
+                count = 0;
+            }
+
+
+
+        }
+        function res() {
+            count = 0;
+            go();
+        }
+    </script>
+
+
+</body>
+
+</html>

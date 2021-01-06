@@ -14,8 +14,6 @@ export default class Player extends Component {
 
     }
     update() {
-
-
         if (Event.keydown) {
 
             if (Event.input(87)) {
