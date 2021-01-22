@@ -82,7 +82,7 @@
 
             ctx.fillStyle = "#fff";
             ctx.strokeStyle = "#fff";
-            ctx.moveTo(0, 0);
+            ctx.moveTo(450, 450);
             ctx.lineTo(m.x, m.y);
             ctx.stroke();
 
@@ -102,16 +102,16 @@
             ctx.beginPath();
             let next = seed * count;
 
-            let x = 0;
-            let y = 0;
+            let x = 450;
+            let y = 450;
 
 
             if (m.x > m.y) {
-                x = next;
-                y = m.y / (m.x / next);
+                x += next;
+                y += m.y / (m.x / next);
             } else {
-                x = m.x / (m.y / next);
-                y = next;
+                x += m.x / (m.y / next);
+                y += next;
             }
             ctx.arc(x, y, 5, 0, 2 * Math.PI);
             ctx.fill();
